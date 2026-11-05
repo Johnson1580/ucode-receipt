@@ -1,0 +1,41 @@
+# 上傳程式的 Windows 打包：在 GitHub 的 Windows 主機先跑測試，再用 PyInstaller 打包成 uploader.exe。
+# 改到 uploader/ 時自動執行，也可以在 GitHub → Actions 手動執行；完成後在該次執行頁面下載「uploader-windows」。
+name: uploader-windows
+on:
+  push:
+    paths: ["uploader/**", ".github/workflows/uploader.yml"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"   # Windows 主機預設編碼不是 UTF-8，中文檔名與訊息會出錯
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 安裝套件
+        run: pip install -r uploader/requirements.txt pyinstaller==6.16.0
+      - name: 測試（假的 device-api，完整流程）
+        run: python uploader/test_uploader.py
+      - name: 打包
+        working-directory: uploader
+        run: pyinstaller --onefile --noconsole --name uploader uploader.py
+      - name: 自動更新實測（打包一個 99.0.0 當新版，看舊版會不會換掉自己並重新啟動）
+        shell: bash
+        run: |
+          mkdir -p uploader/newbuild
+          sed 's/^VERSION = ".*"/VERSION = "99.0.0"/' uploader/uploader.py > uploader/newbuild/uploader.py
+          (cd uploader/newbuild && pyinstaller --onefile --noconsole --name uploader uploader.py)
+          python uploader/e2e_update.py uploader/dist/uploader.exe uploader/newbuild/dist/uploader.exe
+      - name: 整理要帶去現場的檔案
+        shell: bash
+        run: |
+          mkdir -p out
+          cp uploader/dist/uploader.exe uploader/config.example.json uploader/install_autostart.bat out/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uploader-windows
+          path: out/

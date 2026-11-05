@@ -1,0 +1,37 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.vercel/
+.supabase/
+*.log
+.DS_Store
+
+# 真實樣本/客戶資料（含客戶個資與交易金額），不進 git
+samples/
+
+# Python 虛擬環境
+.venv/
+__pycache__/
+
+# 報價單、合約等商務文件
+報價單/
+
+# 上傳程式（本機設定含金鑰）
+uploader/config.json
+uploader/state.json
+uploader/*.log*
+uploader/dist/
+uploader/build/
+uploader/*.spec
+# Next.js
+web/.next/
+web/.env.local
+supabase/.temp/
+
+# 測試帳號密碼（本機）
+supabase/.test-account.txt
+
+# macOS 複製檔案留下的中繼資料、編譯快取
+._*
+*.tsbuildinfo

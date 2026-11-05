@@ -1,0 +1,21 @@
+{
+  "name": "ucode-receipt-recognition",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"supabase/functions/_shared/*.test.ts\"",
+    "validate": "node scripts/validate_samples.ts"
+  },
+  "devDependencies": {
+    "imagescript": "1.3.1"
+  },
+  "workspaces": [
+    "web"
+  ],
+  "dependencies": {
+    "exceljs": "4.4.0"
+  },
+  "overrides": {
+    "uuid": "11.1.1"
+  }
+}

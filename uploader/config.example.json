@@ -1,0 +1,10 @@
+{
+  "api_url": "https://<專案>.supabase.co/functions/v1/device-api",
+  "web_url": "https://<系統網址>",
+  "upload_token": "uc_up_……（系統設定 → 新增上傳金鑰）",
+  "backup_token": "uc_bk_……（系統設定 → 新增備份金鑰）",
+  "watch_dir": "D:\\掃描收款",
+  "uploaded_dir": "D:\\掃描收款\\已上傳",
+  "hdd_dir": "E:\\收款單據備份",
+  "keep_local_days": 7
+}

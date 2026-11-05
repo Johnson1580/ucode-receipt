@@ -1,0 +1,9 @@
+# 只放 Edge Function 設定；這些函式用自己的金鑰驗證（排程密鑰、裝置金鑰），不用 Supabase JWT
+[functions.process-queue]
+verify_jwt = false
+
+[functions.device-api]
+verify_jwt = false
+
+[functions.maintenance]
+verify_jwt = false
