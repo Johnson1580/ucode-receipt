@@ -35,3 +35,6 @@ supabase/.test-account.txt
 # macOS 複製檔案留下的中繼資料、編譯快取
 ._*
 *.tsbuildinfo
+
+.vercel
+.env*

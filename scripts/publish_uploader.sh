@@ -4,7 +4,7 @@
 # 版本號取該次打包的 commit 裡 uploader.py 的 VERSION；要比常駐電腦上的新才會更新。
 set -e
 cd "$(dirname "$0")/.."
-PROJECT_REF="（填本專案的 Supabase ref）"   # 建好 Supabase 專案後填入，避免發布到別的專案
+PROJECT_REF="wbtdcpfhkvjfgfcapflh"   # 本專案（ucode-receipt，U-CODE 組織，東京）；避免發布到別的專案
 [ "$(cat supabase/.temp/project-ref 2>/dev/null)" = "$PROJECT_REF" ] || { echo "supabase/.temp/project-ref 不是本專案，停止"; exit 1; }
 RUN=${1:-$(gh run list --workflow uploader.yml --status success -L 1 --json databaseId -q '.[0].databaseId')}
 SHA_COMMIT=$(gh run view "$RUN" --json headSha -q .headSha)

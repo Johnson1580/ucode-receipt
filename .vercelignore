@@ -1,0 +1,11 @@
+# 用 Vercel CLI 直接部署時不上傳的東西（金鑰檔、本機設定、建置產物、跟網站無關的資料夾）
+.env*
+**/.env*
+supabase/.temp
+supabase/.test-account.txt
+node_modules
+web/.next
+uploader
+samples
+報價單
+._*

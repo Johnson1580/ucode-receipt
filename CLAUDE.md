@@ -10,10 +10,11 @@
 - prompt 與測試裡永進客戶的真實名稱（連鎖客戶、分店名、測試資料的客戶名）都換成虛構的；prompt 不再寫死「永進米行」。
 - **還是照永進的單據與 ERP 設計的**：prompt 假設是「業主 ERP 印的送貨單／應收帳款對帳單＋手寫收款註記」；匯出的收款單 Excel 是永進 ERP 的匯入格式（日期 8 碼、存摺帳號 0001、科目 1141、手續費 0，系統設定可改帳號／科目／手續費）。要用在別的單據或 ERP，prompt 與 `excel.ts` 要跟著改，改完要用新樣本驗證。
 
-## 現況（2026-11-03）
+## 現況（2026-11-05 部署）
 
-- **還沒部署、還沒 git commit**：要自己開 Supabase 專案、Vercel 專案、GitHub repo、Gemini 金鑰（優碼自己的帳號）。步驟照 `docs/部署.md`、`docs/金鑰設定.md`。
-- `scripts/publish_uploader.sh` 的 `PROJECT_REF` 還是佔位字，建好 Supabase 專案後要填，不然腳本會拒絕執行。
+- **Supabase**：專案 `ucode-receipt`，ref **`wbtdcpfhkvjfgfcapflh`**（組織 U-CODE，東京）。這個 Supabase 帳號是新的，底下只有本專案（看不到永進）。資料庫密碼在 `supabase/.env.deploy`、Edge secrets 來源在 `supabase/.env.secrets`（都不進 git）。migrations 0001～0016 已套用、三個函式已部署、排程已 setup。
+- 專案是用 CLI 建的，等於「Automatically expose new tables」有勾：已用 `0016_lock_default_privileges.sql` 收回 anon／authenticated 的表權限與預設權限，只留明確 grant 的。**之後新表照規則自己 grant**；新表也要自己 `enable row level security`（CLI 建的專案沒有自動 RLS）。
+- **Vercel**：專案 `ucode-receipt`（帳號 johnson1580，Hobby），網址 https://ucode-receipt.vercel.app ，Root Directory `web`，4 個環境變數已設。GitHub repo `Johnson1580/ucode-receipt`。
 - `npm run validate`、`scripts/run_batch.ts` 需要 `samples/`（真實樣本與標準答案），這裡沒有，要自己準備。
 
 ## 規則（不要碰到永進米行）
